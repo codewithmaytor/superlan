@@ -1,12 +1,15 @@
 import { createHash } from 'node:crypto'
 import { Redis } from '@upstash/redis'
 import { Ratelimit } from '@upstash/ratelimit'
+import { contactRedisConfig } from './contact-redis-config'
 
 let limiters: { email: Ratelimit; global: Ratelimit } | undefined
 
 export async function checkContactLimit(email: string) {
   if (!limiters) {
-    const redis = Redis.fromEnv()
+    const config = contactRedisConfig()
+    if (!config) throw new Error('Rate limiting unavailable')
+    const redis = new Redis(config)
     limiters = {
       email: new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(3, '10 m'), prefix: 'superlan:contact:email', analytics: false, timeout: 2000 }),
       global: new Ratelimit({ redis, limiter: Ratelimit.slidingWindow(30, '10 m'), prefix: 'superlan:contact:global', analytics: false, timeout: 2000 }),

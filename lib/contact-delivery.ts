@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import type { ContactData } from './contact-validation'
+import { contactRedisConfig } from './contact-redis-config'
 
 function smtpConfig() {
   const { SMTP_HOST: host, SMTP_USER: user, SMTP_PASSWORD: pass, CONTACT_FROM: from, CONTACT_TO: to } = process.env
@@ -10,7 +11,7 @@ function smtpConfig() {
 }
 
 export function contactDeliveryReady() {
-  return Boolean(smtpConfig() && process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN)
+  return Boolean(smtpConfig() && contactRedisConfig())
 }
 
 export async function deliverContact(data: ContactData) {

@@ -12,6 +12,7 @@ let deliveryMode = 'accepted'
 let limitMode = 'allowed'
 let message
 let transportOptions
+let redisOptions
 const counters = []
 Module._extensions['.ts'] = (module, file) => module._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText, file)
 Module._load = function (id, parent, isMain) {
@@ -24,7 +25,7 @@ Module._load = function (id, parent, isMain) {
       return { accepted: deliveryMode === 'accepted' ? [value.to] : [], rejected: deliveryMode === 'accepted' ? [] : [value.to] }
     }, close() {} }
   } }
-  if (id === '@upstash/redis') return { Redis: { fromEnv: () => ({}) } }
+  if (id === '@upstash/redis') return { Redis: class { constructor(options) { redisOptions = options } } }
   if (id === '@upstash/ratelimit') return { Ratelimit: class {
     static slidingWindow() { return {} }
     constructor(options) { this.prefix = options.prefix }
@@ -35,13 +36,29 @@ Module._load = function (id, parent, isMain) {
 
 const { POST } = require('../app/api/contact/route.ts')
 const { contactDeliveryReady } = require('../lib/contact-delivery.ts')
+const { contactRedisConfig } = require('../lib/contact-redis-config.ts')
 const valid = { name: 'Test Visitor', email: 'visitor@example.test', phone: '', subject: 'ERP enquiry', message: 'Please discuss a new project.', website: '' }
 function configured() {
+  delete process.env.KV_REST_API_URL; delete process.env.KV_REST_API_TOKEN
   Object.assign(process.env, { SMTP_HOST: 'smtp.example.test', SMTP_PORT: '465', SMTP_USER: 'website@example.test', SMTP_PASSWORD: 'test-only', CONTACT_FROM: 'website@example.test', CONTACT_TO: 'team@example.test', UPSTASH_REDIS_REST_URL: 'https://redis.example.test', UPSTASH_REDIS_REST_TOKEN: 'test-only' })
   deliveryMode = 'accepted'; limitMode = 'allowed'; message = undefined
 }
 function request(body = valid, headers = {}) { return new Request('https://superlan.co.ke/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(body) }) }
 
+test('Vercel Marketplace Redis variables activate the same protected delivery', async () => {
+  configured(); delete process.env.UPSTASH_REDIS_REST_URL; delete process.env.UPSTASH_REDIS_REST_TOKEN
+  process.env.KV_REST_API_URL = 'https://marketplace.example.test'; process.env.KV_REST_API_TOKEN = 'marketplace-test-only'
+  assert.equal(contactDeliveryReady(), true)
+  assert.equal((await POST(request())).status, 200)
+  assert.deepEqual(redisOptions, { url: process.env.KV_REST_API_URL, token: process.env.KV_REST_API_TOKEN })
+})
+test('Redis configuration keeps credential pairs together and rejects incomplete setup', async () => {
+  configured()
+  assert.deepEqual(contactRedisConfig(), { url: process.env.UPSTASH_REDIS_REST_URL, token: process.env.UPSTASH_REDIS_REST_TOKEN })
+  delete process.env.UPSTASH_REDIS_REST_TOKEN; process.env.KV_REST_API_TOKEN = 'other-test-only'
+  assert.equal(contactRedisConfig(), null); assert.equal(contactDeliveryReady(), false)
+  assert.equal((await POST(request())).status, 503); assert.equal(message, undefined)
+})
 test('unconfigured delivery returns failure without claiming success', async () => {
   configured(); delete process.env.SMTP_PASSWORD
   assert.equal(contactDeliveryReady(), false)

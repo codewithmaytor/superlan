@@ -119,11 +119,11 @@ All colors, spacing, radius, and shadow values are defined in `tailwind.config.c
 
 The contact form is a client component (`components/ContactForm.tsx`) that POSTs to `/api/contact/route.ts`. Client and server share validation in `lib/contact-validation.ts`. Requests must contain JSON and stay within 16 KB. A hidden website field rejects basic automated submissions. Personal form data is not written to console logs.
 
-Email delivery uses server-only Truehost SMTP settings and shared Upstash rate limiting. Both must be configured before the contact page displays the form. Until then, visitors receive phone and WhatsApp enquiry options. The public mailbox is also hidden while `NEXT_PUBLIC_EMAIL_ENABLED` is false. See `.env.example` and [DEPLOYMENT.md](DEPLOYMENT.md).
+Email delivery uses server-only Truehost SMTP settings and shared Upstash rate limiting. Both must be configured before the contact page displays the form. The connected Vercel Marketplace database provides the KV REST variable pair; direct Upstash variables are also supported as a complete pair. Until then, visitors receive phone and WhatsApp enquiry options. The public mailbox is also hidden while `NEXT_PUBLIC_EMAIL_ENABLED` is false. See `.env.example` and [DEPLOYMENT.md](DEPLOYMENT.md).
 
 The sender and recipient are fixed server configuration; visitors are Reply-To only. Encrypted SMTP and certificate validation are required. Success is returned only when the provider accepts the message. Redis stores short-lived counters keyed by a hash of the email address, not enquiry contents. Limits are three requests per email and thirty globally in ten minutes. Limiter errors/timeouts fail closed. Production SMTP delivery still needs an inbox test once the real mailbox works.
 
-`npm test` runs nine contact checks with SMTP/Redis replaced by test doubles, covering acceptance/rejection, encryption settings, validation/header injection, honeypot, request limits, origins, shared rate limiting and limiter outages. No external emails are sent by those tests.
+`npm test` runs eleven contact checks with SMTP/Redis replaced by test doubles, covering acceptance/rejection, encryption settings, validation/header injection, honeypot, request limits, origins, shared rate limiting and limiter outages and Marketplace credential pairing. No external emails are sent by those tests.
 
 ## Build
 
@@ -153,7 +153,7 @@ npm run build
 npm run typecheck
 ```
 
-The favicon and browser icon are derived from the existing company logo. The News page contains three original service/project guides with category filters and static detail pages. Projects uses profile-backed past-client names and a project enquiry route; no fabricated case studies are included. Unconfigured social profiles are omitted. A website privacy notice and custom missing/error pages are included. GitHub/Vercel account access, DNS connection and actual mailbox delivery remain to be completed.
+The favicon and browser icon are derived from the existing company logo. The News page contains three original service/project guides with category filters and static detail pages. Projects uses profile-backed past-client names and a project enquiry route; no fabricated case studies are included. Unconfigured social profiles are omitted. A website privacy notice and custom missing/error pages are included. The source is published at https://github.com/codewithmaytor/superlan and deployed to https://superlan.co.ke, with a verified HTTPS www redirect. Truehost info mailbox and quotations alias exist; actual email delivery and SMTP activation remain to be completed.
 
 Roboto is self-hosted through `next/font/local` using the licensed font under `app/fonts/`. Production builds do not contact Google Fonts.
 

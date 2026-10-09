@@ -7,7 +7,7 @@ Code belongs in GitHub; Vercel hosts the Next.js app; Truehost provides the doma
 
 Use Node.js 22. Run `npm ci`, `npm run lint`, `npm test`, `npm run build` and `npm run typecheck`. The build uses Webpack and self-hosted fonts. Do not use GitHub Pages or static export: the contact endpoint requires a server runtime.
 
-This workspace's `.git` directory is an empty, read-only placeholder, not a functioning repository. The release ZIP contains only the application source and public assets. A clean Git repository has been prepared at `/tmp/superlan-source`, with `main` targeting the user-created public repository `https://github.com/codewithmaytor/superlan.git`. Source upload is pending. Do not upload the ZIP itself as the website source. Include dotfiles such as `.github`, `.gitignore` and `.env.example`.
+This workspace's `.git` directory is an empty, read-only placeholder, not a functioning repository. The release ZIP contains only the application source and public assets. A clean Git repository has been prepared at `/tmp/superlan-source`, with `main` targeting the user-created public repository `https://github.com/codewithmaytor/superlan.git`. Source was published successfully on 9 October 2026. The initial GitHub Website checks passed. Do not upload the ZIP itself as the website source. Include dotfiles such as `.github`, `.gitignore` and `.env.example`.
 
 Never commit mailbox passwords, Redis tokens, local `.env` files, `.vercel`, `node_modules`, `.next`, or local agent/account directories. The included GitHub workflow checks lint, contact behavior, production build, types and production dependency vulnerabilities on pushes and pull requests.
 
@@ -17,13 +17,13 @@ In Vercel, import the GitHub repository. Select the correct account/team, Next.j
 
 Deploy first to the generated Vercel address. With no email settings, the contact page displays phone and WhatsApp enquiry options. It does not show a form that cannot deliver. The public email address remains hidden until `NEXT_PUBLIC_EMAIL_ENABLED=true` is set and the site is rebuilt.
 
-The included workflow is ready but has not run on GitHub until the repository is uploaded. Vercel account login must also be valid; the existing local CLI token was invalid when checked.
+Vercel project `superlan` is connected to `codewithmaytor/superlan` and deploys `main`. The generated production URL is https://superlan-two.vercel.app. Use the signed-in browser project settings for changes; the old local Vercel CLI credential is not usable.
 
 ## 3. Connect the domain without disrupting email
 
 Add `superlan.co.ke` and `www.superlan.co.ke` in Vercel project Settings → Domains. Make the apex domain primary and redirect `www` to it. Copy the exact A/CNAME values Vercel displays for this project; do not use an old generic IP or guessed CNAME.
 
-The public DNS check found no apex A/AAAA records and no www hostname, so website routing still needs to be configured. Keep the current Cloudflare nameservers (`jillian.ns.cloudflare.com` and `norm.ns.cloudflare.com`). In the active Cloudflare DNS zone, replace only the website records for the apex (`@`) and `www` with the values Vercel requests. Inspect existing A, AAAA and CNAME conflicts for those two names. Preserve MX, SPF TXT, DKIM, DMARC, `mail`, webmail and other service records. If the MX target is the apex rather than a dedicated mail hostname, ask Truehost for the correct mail target before changing the apex A record. Otherwise incoming mail could be redirected to the website host. If a `mail` CNAME points to the apex, replace it with the provider-approved mail server record as part of that email repair.
+Website routing is configured and verified. Both `@` and `www` use DNS-only CNAME records targeting `b669a8dd00154712.vercel-dns-017.com`, as displayed by this Vercel project. Vercel reports Valid Configuration; apex HTTPS returns 200 and www returns 308 to the apex while preserving the path. Cloudflare flattens the apex CNAME into public address answers. Keep the current Cloudflare nameservers (`jillian.ns.cloudflare.com` and `norm.ns.cloudflare.com`). In the active Cloudflare DNS zone, replace only the website records for the apex (`@`) and `www` with the values Vercel requests. Inspect existing A, AAAA and CNAME conflicts for those two names. Preserve MX, SPF TXT, DKIM, DMARC, `mail`, webmail and other service records. If the MX target is the apex rather than a dedicated mail hostname, ask Truehost for the correct mail target before changing the apex A record. Otherwise incoming mail could be redirected to the website host. If a `mail` CNAME points to the apex, replace it with the provider-approved mail server record as part of that email repair.
 
 After DNS propagation, check both domains in Vercel for valid configuration and an issued HTTPS certificate. Test the apex website and the `www` redirect. Ownership verification alone does not confirm the routing or certificate is ready.
 
@@ -31,11 +31,9 @@ Official instructions: [Vercel custom domain setup](https://vercel.com/docs/doma
 
 ## 4. Fix and test Truehost mailboxes
 
-The signed-in account has an active Workplace Starter email package for Superlan, but no website hosting package. Its domain page confirms DNS management has moved to Cloudflare. The Truehost DNS manager still displays a separate Cloudoon zone; changes there do not automatically update the active Cloudflare zone.
+The signed-in account has an active Workplace Starter email package for Superlan, but no website hosting package. Its domain page confirms Cloudflare manages live DNS. On 9 October 2026, `truehost_verification.superlan.co.ke` TXT value `verify_x8alxdhkhraa` was added to that live zone with TTL 3600. Public resolution succeeded and the product's activation warning cleared. Live DKIM selector `smarthost._domainkey` matches the provider's displayed key and was preserved.
 
-The email product currently reports a missing domain ownership record. Add TXT name `truehost_verification` (full name `truehost_verification.superlan.co.ke`), value `verify_x8alxdhkhraa`, TTL 3600, in the active Cloudflare zone. The same record already exists in Truehost's old zone; do not add a duplicate there. Then use the product's Verify DNS Records action and confirm the warning clears. Live DKIM selector `smarthost._domainkey` currently matches the provider's displayed public key and must be preserved.
-
-The intended enquiry mailbox is `info@superlan.co.ke`. The future quotation mailbox is `quotations@superlan.co.ke`; this is an email address, not `quotations.superlan.co.ke`.
+The user created `info@superlan.co.ke`; Truehost shows it Active with 3 GB quota. The Starter plan includes one mailbox and ten aliases. `quotations@superlan.co.ke` was added successfully as an alias into the info inbox, rather than a separately billed mailbox. Login and actual mail delivery still need verification.
 
 The public MX records currently point to `workplaceproemail.com` (priority 10), `workplaceproemail.net` (20) and `workplace.truehost.cloud` (50). This indicates Truehost Workplace email routing; it does not confirm that a mailbox has been created or that its login works. The domain also publishes SPF `v=spf1 include:_spf.cloudoon.com ~all` and a DMARC quarantine policy. Preserve these records while changing the website.
 
@@ -47,12 +45,13 @@ Reference: [Truehost Workplace getting-started guide](https://truehost.com/suppo
 
 ## 5. Enable website message delivery
 
-Create a Redis database through Upstash or Vercel Marketplace. Supply these server-only environment values in Vercel, following `.env.example`:
+A free Upstash database is now connected to Superlan through Vercel Marketplace. It supplies `KV_REST_API_URL` and `KV_REST_API_TOKEN`; the app accepts that complete pair automatically. Direct Upstash setup can instead use the complete `UPSTASH_REDIS_REST_URL`/`UPSTASH_REDIS_REST_TOKEN` pair. The URL and token must come from the same configuration; the app never mixes incomplete pairs. Supply the remaining server-only email environment values in Vercel, following `.env.example`:
 
 - `SMTP_HOST`, `SMTP_PORT` (465 or 587), `SMTP_USER`, `SMTP_PASSWORD`
-- `CONTACT_FROM`: authenticated company mailbox address
-- `CONTACT_TO`: working destination mailbox; initially `info@superlan.co.ke`
-- `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`
+- `CONTACT_FROM`: already saved as `info@superlan.co.ke` in Production
+- `CONTACT_TO`: already saved as `info@superlan.co.ke` in Production
+- `SMTP_USER`: already saved as `info@superlan.co.ke` in Production
+- Redis REST URL/token pair: already supplied by the connected Marketplace integration
 
 Both valid SMTP configuration and shared rate-limit configuration are needed before the form appears. The server requires encrypted SMTP with certificate validation. It uses a fixed company sender and recipient and places the visitor's address in Reply-To. Provider rejection, delivery errors or a rate-limit timeout return failure; they never claim the message was sent.
 
