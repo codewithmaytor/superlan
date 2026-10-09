@@ -1,0 +1,27 @@
+export const siteConfig = {
+  name: 'Superlan East Africa Limited',
+  description: 'ERP systems. Bespoke IT solutions. Managed services. Cybersecurity. Since 2011, Superlan East Africa Limited has been the technology partner businesses across East Africa trust to build, innovate, and protect.',
+  url: 'https://superlan.co.ke',
+  companyProfile: '/documents/superlan-company-profile-2026.pdf',
+  ogImage: '/og-image.png',
+  address: {
+    street: 'View Park Towers, 14th Floor Wing C, Room 2',
+    city: 'Nairobi',
+    country: 'KE',
+    postal: 'P.O Box 62743-00200',
+  },
+  phone: '0715 398 683',
+  phoneHref: 'tel:+254715398683',
+  email: 'info@superlan.co.ke',
+  emailEnabled: process.env.NEXT_PUBLIC_EMAIL_ENABLED === 'true',
+  whatsappUrl: 'https://wa.me/254715398683',
+  careersEmail: 'careers@superlan.co.ke',
+  founded: 2011,
+  incorporated: 2026,
+  social: {
+    facebook: '#',
+    linkedin: '#',
+    twitter: '#',
+    instagram: '#',
+  },
+} as const

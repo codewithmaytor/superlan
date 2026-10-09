@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+.env*
+!.env.example
+.vercel/
+*.pem
+*.key
+*.tsbuildinfo
+.agents/
+.codex/
+.aws/
+release/
+.DS_Store
