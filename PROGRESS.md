@@ -27,7 +27,7 @@ Use [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) for the dated launch requirements
 - Active DNS is managed in Cloudflare. Website routing uses Vercel's project values; Truehost email records were preserved.
 - Truehost's verification record was added to Cloudflare and its activation warning cleared. The info mailbox and quotations alias are active.
 - SMTP was configured and real delivery tested on 10 October 2026 (Africa/Nairobi). Both original website messages arrived in Spam; the alias test reached Inbox.
-- On 13 October, a newly authorized website enquiry with an independent Reply-To address reached the company Inbox. Earlier Spam results remain recorded; one successful test does not establish delivery reliability for every enquiry.
+- On 13 October, a newly authorized website enquiry with an independent Reply-To address reached the company Inbox. The approved verification reply reached the independent Gmail Inbox. Earlier Spam results remain recorded; one successful test does not establish delivery reliability for every enquiry.
 - Google domain ownership was verified on 13 October. Search Console processed the sitemap successfully with 13 discovered pages and confirmed the homepage is indexed. Other pages' indexing and rankings have not been individually verified.
 
 ## Verification
@@ -40,7 +40,7 @@ Use [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) for the dated launch requirements
 
 ## Open launch items
 
-1. The approved verification reply reached the independent Gmail Inbox on 13 October. Continue monitoring enquiry delivery; ask Truehost for the classification rule or score if Spam recurs.
+1. Continue monitoring enquiry delivery; ask Truehost for the classification rule or score if Spam recurs.
 2. Review other important URLs in Search Console when coverage data becomes available. Sitemap discovery is separate from indexing and ranking.
 3. Obtain director approval for published details, logo permissions, privacy contact, retention arrangements and enquiry ownership.
 4. Assign mailbox monitoring, account recovery, domain/email/hosting renewals and recoverable source/DNS copies.
