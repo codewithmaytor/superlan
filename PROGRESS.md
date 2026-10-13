@@ -1,102 +1,59 @@
 # Superlan website progress
 
-Last checked: 9 October 2026.
+Last checked: 13 October 2026, Africa/Nairobi.
 
-## Completed
+Use [LAUNCH_CHECKLIST.md](LAUNCH_CHECKLIST.md) for the dated launch requirements, evidence, proposed owners and next actions. This summary distinguishes completed work from open sign-off items.
 
-- Initial audit and approved layout, contrast, font, service-card, and mobile hero fixes.
-- Mobile menu close controls, Escape, focus handling, and background scroll lock.
-- WhatsApp placement that avoids forms, service tags, and the footer.
-- Company-profile download, updated About content, selected past clients, delivery process, and clickable footer contact details.
-- Featured-client carousel showing one item on mobile, two on tablets, and three on desktop.
-- Carousel previous/next controls, arrow-key navigation, explicit pause/resume, pause on hover/focus, and reduced-motion handling.
-- Accessible sector filters, result announcements, and readable client names alongside logos.
-- Home logo animation pause control and reduced-motion layout without duplicated logos.
-- Framework upgrade to Next.js 16.4.0, React 19.3.0, and compatible icon/type dependencies.
-- Tailwind CSS 4.3.3 migration, updated class-merging helper, and preserved corner-radius tokens.
-- ESLint flat configuration and separate lint/typecheck scripts.
-- Self-hosted variable Roboto font with working regular/medium/bold weights and included SIL Open Font License.
-- Bold core-services strip immediately below the home hero, with gold dot separators, one line from 640 pixels, and two balanced lines on narrow mobile screens.
-- Shared canonical URLs, Open Graph/Twitter metadata on all nine pages, and company/website structured data.
-- Clearer social preview image, browser icon, and favicon from the existing brand assets.
-- Basic response security headers and removal of the framework identification header.
+## Completed website work
+
+- Approved layout, contrast, font, service-card, mobile hero and padded footer fixes.
+- Mobile menu close controls, Escape, focus handling and background scroll lock.
+- WhatsApp placement that avoids forms, service tags and the footer.
+- Company-profile download, profile-backed About content, selected past clients, delivery process and clickable footer contact details.
+- Featured-client carousel with one, two or three visible clients by viewport, keyboard controls, pause/resume, hover/focus pause and reduced-motion support.
+- Accessible client sector filters and controllable home logo animation.
+- Next.js 16.4.0, React 19.3.0, Tailwind CSS 4.3.3, compatible icon/types, flat ESLint configuration and self-hosted licensed variable Roboto.
+- Responsive home core-services strip and checked font weights.
+- Shared canonical and social metadata, company/website structured data, brand-derived social image, icon and favicon.
+- Three service/project guides with category filters and static detail pages; profile-backed Projects enquiry route without fabricated case studies.
+- Privacy notice, custom missing/error pages, security response headers and removal of unconfigured social links and automatic map loading.
+- Encrypted authenticated SMTP, fixed company sender/recipient, visitor Reply-To and shared Upstash submission limits with failure handling.
+- Environment template, Node.js 22 requirement, secret/build ignores, Vercel configuration and GitHub checks.
+
+## Deployment and discovery
+
+- Source repository: https://github.com/codewithmaytor/superlan. Before this documentation update, all 75 tracked files matched main commit `54afed5774fd5fb9729140e95950a8268a936dd5`, whose Website checks passed.
+- Public site: https://superlan.co.ke, deployed by Vercel from main. HTTPS and the permanent www redirect were checked.
+- Active DNS is managed in Cloudflare. Website routing uses Vercel's project values; Truehost email records were preserved.
+- Truehost's verification record was added to Cloudflare and its activation warning cleared. The info mailbox and quotations alias are active.
+- SMTP was configured and real delivery tested on 10 October 2026 (Africa/Nairobi). Both original website messages arrived in Spam; the alias test reached Inbox.
+- On 13 October, a newly authorized website enquiry with an independent Reply-To address reached the company Inbox. Earlier Spam results remain recorded; one successful test does not establish delivery reliability for every enquiry.
+- Google domain ownership was verified on 13 October. Search Console processed the sitemap successfully with 13 discovered pages and confirmed the homepage is indexed. Other pages' indexing and rankings have not been individually verified.
 
 ## Verification
 
-- `npm run build`: passed with no warnings using the supported Webpack build option.
-- `npm run lint`: passed with zero warnings/errors.
-- `npm run typecheck`: passed.
-- Comprehensive browser checks from the preceding stage: all nine pages at 360, 390, 768, and 1440 pixels, 36 page/viewport combinations.
-- No browser JavaScript errors, broken images, or horizontal overflow in those checks.
-- Carousel buttons, arrow keys, pause/resume, hover/focus pause, responsive resizing, keyboard filters, and mobile-menu Escape checked.
-- Canonical URLs, social image metadata, structured data, asset downloads, sitemap, robots, and response headers checked.
-- The mobile hero Contact Us button fits in a 360x640 viewport.
-- Latest home-service strip checked at 360, 390, 640, 768, 1024, and 1440 pixels, including actual variable-font weight support and overflow.
-- All nine pages rechecked at 360 and 1440 pixels after the variable-font correction, with no JavaScript errors, broken images, or horizontal overflow.
-- `npm audit --omit=dev`: zero findings after the final dependency changes.
+- On 13 October, production build, lint and TypeScript passed. All 11 contact tests passed using SMTP/Redis test doubles; those tests send no real mail.
+- Public checks on 13 October: all 13 sitemap pages returned 200, key downloads/images returned 200 and a missing page returned 404.
+- Earlier recorded browser QA covered 13 pages at 360, 390, 768 and 1440 pixels, 52 page/viewport combinations, with no reported horizontal overflow, broken loaded images or dead hash links. These are historical QA results, not a new full browser run on 13 October.
+- Recorded news filter/navigation, menu, carousel, configured-form validation and service-failure checks passed.
+- Production dependency audit on 13 October: zero findings. Full audit: five high development package findings in the lint dependency chain. A compatible remediation is still required; do not force an incompatible lint-config downgrade.
 
-## Launch work completed in the current stage
+## Open launch items
 
-- Confirmed the deployment plan: GitHub source, Vercel hosting, Truehost domain/email, `superlan.co.ke` as the primary domain.
-- Replaced fake news dates and Coming Soon cards with three original guides grounded in the services and company profile.
-- Added working accessible news category filters, keyboard operation, three static article routes, article metadata and sitemap entries.
-- Replaced project placeholders with profile-backed past-client names, company-profile download, project enquiry and briefing guide.
-- Removed dead social links; footer now links to service sections, privacy notice, phone and WhatsApp.
-- Added a factual website privacy notice, custom 404 page and recoverable error page.
-- Removed automatic embedded Google Maps loading and provided an explicit location link.
-- Removed unconfirmed office hours and the unsupported live-online WhatsApp indicator.
-- Careers directs people to ask about roles instead of sending CVs to an unconfigured mailbox.
-- Prepared encrypted Truehost SMTP delivery with fixed sender/recipient, visitor Reply-To, timeouts and provider-acceptance checks.
-- Added shared Upstash submission limits and failure handling across Vercel function instances.
-- Contact form activates only with SMTP and rate-limit configuration; public mailbox display is separately gated until verified.
-- Contact page currently provides phone/WhatsApp enquiry and quotation routes while email setup is pending.
-- Added `.env.example`, safer secret/build ignores, Node.js 22 requirement, Vercel configuration and GitHub CI checks.
-- Added DEPLOYMENT.md with email-preserving DNS instructions, SMTP setup, production acceptance and rollback.
-- Public DNS uses Cloudflare nameservers and Truehost Workplace MX records; the guessed mail.superlan.co.ke host did not resolve. The deployment notes reflect the observed routing.
-- Signed-in Truehost inspection confirmed an active Workplace Starter email service for Superlan and no purchased website hosting service in this account.
-- Diagnosed the email activation warning: the required `truehost_verification` TXT record exists in Truehost's old DNS zone but is absent from live DNS. Truehost's domain page confirms DNS management moved to Cloudflare; future DNS edits belong there. Live MX, SPF, DMARC and the `smarthost._domainkey` DKIM record are present.
+1. The approved verification reply reached the independent Gmail Inbox on 13 October. Continue monitoring enquiry delivery; ask Truehost for the classification rule or score if Spam recurs.
+2. Review other important URLs in Search Console when coverage data becomes available. Sitemap discovery is separate from indexing and ranking.
+3. Obtain director approval for published details, logo permissions, privacy contact, retention arrangements and enquiry ownership.
+4. Assign mailbox monitoring, account recovery, domain/email/hosting renewals and recoverable source/DNS copies.
+5. Confirm the current Vercel plan suits this company website. The 9 October record noted Hobby, but the account plan has not been rechecked. Vercel's [Hobby guidance](https://vercel.com/docs/plans/hobby) restricts that plan to personal, non-commercial use. No paid upgrade has been made in this work.
+6. Review the documentation proposal and checks before publishing it to main.
 
-## Latest verification
+The site is live and its homepage is indexed. Whole-launch sign-off remains open while the required items above are unresolved.
 
-- Production build, lint and typecheck passed.
-- Nine contact tests passed using SMTP/Redis test doubles; no real email sent. Covers provider acceptance/rejection, encrypted ports, request validation/injection, honeypot, body/content-type limits, foreign origins, reverse-proxy origin handling, shared rate limiting and limiter outages.
-- 13 pages at 360, 390, 768 and 1440 pixels: 52 page/viewport checks. No horizontal overflow, broken loaded images or dead hash links; each page has one H1 and the correct canonical URL.
-- News filter mouse/keyboard interactions and article navigation passed; no browser JavaScript errors in the checked pages.
-- Isolated configured-form browser check: empty-field errors focus the first field; service failure shows an error with phone fallback, preserves input and re-enables submission.
-- 19 page/asset HTTP checks, two missing-page 404 checks, 13 sitemap URLs and response security headers passed.
-- Production dependency audit: zero vulnerabilities after installing delivery/rate-limit packages.
+## Later improvements requiring company material
 
-## Live deployment (9 October 2026)
-
-- Published the source to https://github.com/codewithmaytor/superlan using the user-created, repository-scoped token. Initial commit: `61c6242`; GitHub Website checks passed.
-- Vercel project `superlan` is deployed from `main`: https://superlan-two.vercel.app. Primary domain: https://superlan.co.ke.
-- Cloudflare apex and www CNAME records target Vercel's exact project hostname, `b669a8dd00154712.vercel-dns-017.com`, with proxying disabled. Existing nameservers and all mail records were preserved.
-- Vercel reports Valid Configuration for apex, www and the generated address. HTTPS certificate validation passed; apex returns 200 and www redirects permanently (308), preserving the path.
-- Live checks passed for all 13 sitemap pages and 31 referenced assets, one H1/canonical per page, sitemap/robots, a missing-page 404 and invalid contact-request rejection. Local DNS still held a previous negative result, so HTTP checks used the fresh public address with the original hostname and normal TLS validation.
-- Added Truehost's verification TXT in the active Cloudflare zone; the email activation warning cleared.
-- The user created `info@superlan.co.ke`, confirmed Active with 3 GB quota. Created `quotations@superlan.co.ke` as an alias into that same inbox, using the included alias allowance.
-- The user created a free Upstash database and connected it to Superlan in Vercel. The app now accepts the integration's complete KV REST variable pair as well as the direct Upstash pair, without copying secrets.
-- Eleven contact tests, lint, production build and typecheck passed after that integration change. Production sender, recipient and SMTP username are saved as info@superlan.co.ke. Real SMTP delivery remains unconfigured and untested; the live site currently offers phone and WhatsApp enquiries.
-
-## Remaining for email activation
-
-1. Sign in to Truehost Workplace, confirm the exact outgoing SMTP hostname/port and verify mailbox sending/receiving. No mailbox password has been placed in source or chat.
-2. Add verified SMTP settings and the mailbox password as server-only production environment variables in Vercel. Enable public email display only after mailbox verification, redeploy, then confirm an authorized website enquiry arrives with the correct Reply-To.
-3. Review company details, logo publication permissions and privacy notice before wider promotion. Additional case studies, biographies, testimonials and certifications require approved material.
-
-The Vercel account is currently Hobby; its commercial-use restriction was discussed with the user. Hosting-plan suitability remains an account decision. No paid upgrade was made.
-
-## Tooling follow-up
-
-- Five high audit findings remain in the development-only lint chain, stemming from `braces`. Its upstream advisory lists no patched version: https://github.com/advisories/GHSA-vfj7-8cjw-p6xm. Do not force an incompatible lint-config downgrade.
-- ESLint 9 has an upstream end-of-support notice. Move to ESLint 10 when the Next.js plugin/config combination supports it.
-
-## Company material for future enrichment
-
-- Completed projects with scope, results, dates and approved photos.
-- Leadership names, roles, biographies and professional photos.
-- Client publication permissions, official spellings, approved logos and testimonials.
-- Certifications, partnership evidence and permitted badges.
-- Supported ERP platforms, support coverage/hours and agreed response times.
-- Documented CSR activities, real announcements, confirmed vacancies and official social URLs.
-- Clarification of whether Sustainability remains a core value.
+- Approved project scopes, results, dates, photos and testimonials.
+- Leadership biographies/photos, certifications and permitted partner badges.
+- Supported ERP platforms, actual coverage hours and agreed response times.
+- Documented CSR activities, real company announcements and confirmed vacancies.
+- Official social URLs, service terms and clarification of whether Sustainability remains a core value.
+- Measured performance, usability and visitor/enquiry reporting improvements.
