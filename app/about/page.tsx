@@ -4,7 +4,7 @@ import { siteConfig } from '@/lib/site-config'
 import SlimPageHeader from '@/components/SlimPageHeader'
 import Section from '@/components/Section'
 
-export const metadata = pageMetadata('/about', 'About Us - Superlan East Africa Limited', 'About Superlan East Africa Limited - Our story, vision, mission, and core values.')
+export const metadata = pageMetadata('/about', 'About Superlan | IT Company in Nairobi, Kenya', 'Meet Superlan East Africa Limited, a Nairobi ICT company founded in 2011. Explore our story, ERP, software, infrastructure and managed IT services.')
 
 const timelineItems = [
   {

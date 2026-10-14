@@ -4,7 +4,7 @@ import { GraduationCap, Shield, Monitor, Users, Star, Award } from 'lucide-react
 import SlimPageHeader from '@/components/SlimPageHeader'
 import Section from '@/components/Section'
 
-export const metadata = pageMetadata('/csr', 'CSR - Superlan East Africa Limited', 'Superlan East Africa Limited Corporate Social Responsibility - Education, Environment, Digital Literacy, Youth Empowerment, Community Development.')
+export const metadata = pageMetadata('/csr', 'Community Focus & CSR | Superlan East Africa Limited', 'Explore Superlan’s community focus areas, including education, digital literacy, youth empowerment and the partnerships we aim to develop.')
 
 const focusAreas = [
   {

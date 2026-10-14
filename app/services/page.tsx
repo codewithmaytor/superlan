@@ -4,8 +4,9 @@ import { flagshipServices, allServices } from '@/lib/services-data'
 import SlimPageHeader from '@/components/SlimPageHeader'
 import Section from '@/components/Section'
 import DeliveryProcess from '@/components/DeliveryProcess'
+import { serviceHref } from '@/lib/service-pages'
 
-export const metadata = pageMetadata('/services', 'Services - Superlan East Africa Limited', 'Superlan East Africa Limited provides end-to-end ICT solutions including ERP, Bespoke IT Solutions, Managed IT Services, Cybersecurity, Cloud Solutions, and more.')
+export const metadata = pageMetadata('/services', 'ERP, Software & IT Services in Kenya | Superlan', 'Explore ERP, custom software, managed IT, cybersecurity and ICT infrastructure services from Superlan in Nairobi, Kenya. Discuss your requirements with our team.')
 
 const whyPartnerItems = [
   'Experienced ICT professionals',
@@ -47,6 +48,7 @@ export default function ServicesPage() {
                 title={service.title}
                 description={service.description}
                 chips={service.chips}
+                href={serviceHref(service.id)}
                 featured
               />
               </div>

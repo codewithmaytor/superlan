@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/site-config'
 import { insights } from '@/lib/news-data'
+import { servicePages } from '@/lib/service-pages'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/csr',
     '/contact',
     '/privacy',
+    ...servicePages.map(service => `/services/${service.slug}`),
     ...insights.map(article => `/news/${article.slug}`),
   ].map((route) => ({
     url: `${baseUrl}${route}`,

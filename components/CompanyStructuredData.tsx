@@ -1,13 +1,15 @@
 import { siteConfig } from '@/lib/site-config'
+import StructuredData from './StructuredData'
 
 export default function CompanyStructuredData() {
   const data = {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'ProfessionalService',
+        '@type': 'LocalBusiness',
         '@id': `${siteConfig.url}/#organization`,
         name: siteConfig.name,
+        legalName: siteConfig.name,
         url: siteConfig.url,
         description: siteConfig.description,
         logo: `${siteConfig.url}/logo.svg`,
@@ -15,6 +17,7 @@ export default function CompanyStructuredData() {
         telephone: siteConfig.phoneHref.replace('tel:', ''),
         email: siteConfig.emailEnabled ? siteConfig.email : undefined,
         foundingDate: String(siteConfig.founded),
+        areaServed: ['Kenya', 'East Africa'],
         address: {
           '@type': 'PostalAddress',
           streetAddress: siteConfig.address.street,
@@ -34,5 +37,5 @@ export default function CompanyStructuredData() {
     ],
   }
 
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }} />
+  return <StructuredData data={data} />
 }

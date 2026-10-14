@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'Superlan East Africa Limited',
-  description: 'ERP systems. Bespoke IT solutions. Managed services. Cybersecurity. Since 2011, Superlan East Africa Limited has been the technology partner businesses across East Africa trust to build, innovate, and protect.',
+  description: 'ERP implementation, custom software, managed IT and cybersecurity from Superlan East Africa Limited in Nairobi, Kenya. Discuss your project with our team.',
   url: 'https://superlan.co.ke',
   companyProfile: '/documents/superlan-company-profile-2026.pdf',
   ogImage: '/og-image.png',

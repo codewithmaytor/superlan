@@ -6,7 +6,7 @@ import SlimPageHeader from '@/components/SlimPageHeader'
 import Section from '@/components/Section'
 import { selectedPastClients } from '@/lib/company-profile'
 
-export const metadata = pageMetadata('/clients', 'Clients - Superlan East Africa Limited', 'Superlan East Africa Limited clients - Government, Education, Financial, Healthcare, NGOs, Corporate, and SMEs.')
+export const metadata = pageMetadata('/clients', 'Clients & Sectors Served | Superlan East Africa Limited', 'Explore the clients and sectors featured by Superlan East Africa Limited, including government, education and finance. Discuss relevant ICT experience with us.')
 
 export default function ClientsPage() {
   return (

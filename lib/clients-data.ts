@@ -3,6 +3,8 @@ export interface Client {
   sector: string
   logo: string
   alt: string
+  width?: number
+  height?: number
 }
 
 export const featuredClients: Client[] = [
@@ -18,29 +20,29 @@ export const clientGroups = [
     sector: 'county',
     heading: 'County Governments',
     clients: [
-      { name: 'Busia County', logo: '/clients/busia-county.png', alt: 'Busia County' },
+      { name: 'Busia County', logo: '/clients/busia-county.png', alt: 'Busia County', width: 288, height: 254 },
     ],
   },
   {
     sector: 'education',
     heading: 'Educational Institutions',
     clients: [
-      { name: 'Bomet University', logo: '/clients/bomet-university.png', alt: 'Bomet University' },
-      { name: 'Kabianga University', logo: '/clients/kabianga-university.png', alt: 'Kabianga University' },
+      { name: 'Bomet University', logo: '/clients/bomet-university.png', alt: 'Bomet University', width: 517, height: 593 },
+      { name: 'Kabianga University', logo: '/clients/kabianga-university.png', alt: 'Kabianga University', width: 250, height: 202 },
     ],
   },
   {
     sector: 'private',
     heading: 'Private Companies',
     clients: [
-      { name: 'KTDA', logo: '/clients/ktda.png', alt: 'KTDA' },
+      { name: 'KTDA', logo: '/clients/ktda.png', alt: 'KTDA', width: 447, height: 447 },
     ],
   },
   {
     sector: 'financial',
     heading: 'Financial',
     clients: [
-      { name: 'Police Sacco', logo: '/clients/police-sacco.png', alt: 'Police Sacco' },
+      { name: 'Police Sacco', logo: '/clients/police-sacco.png', alt: 'Police Sacco', width: 447, height: 447 },
     ],
   },
 ]

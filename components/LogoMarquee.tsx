@@ -6,7 +6,7 @@ import { Pause, Play } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface LogoMarqueeProps {
-  images: { src: string; alt: string }[]
+  images: { src: string; alt: string; width: number; height: number }[]
 }
 
 export default function LogoMarquee({ images }: LogoMarqueeProps) {
@@ -56,9 +56,9 @@ export default function LogoMarquee({ images }: LogoMarqueeProps) {
             <Image
               src={img.src}
               alt={!prefersReducedMotion && i >= images.length ? '' : img.alt}
-              width={140}
+              width={Math.round(Math.min(140, 36 * img.width / img.height))}
               height={36}
-              sizes="140px"
+              sizes={`${Math.round(Math.min(140, 36 * img.width / img.height))}px`}
               className="h-9 w-auto max-w-[140px] object-contain"
               priority={false}
             />
