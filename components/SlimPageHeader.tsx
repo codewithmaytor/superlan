@@ -1,4 +1,6 @@
 import React from 'react';
+import StructuredData from './StructuredData';
+import { siteConfig } from '@/lib/site-config';
 
 interface Breadcrumb {
   label: string;
@@ -14,14 +16,24 @@ interface SlimPageHeaderProps {
 const SlimPageHeader: React.FC<SlimPageHeaderProps> = ({ title, subtitle, breadcrumbs = [] }) => {
   return (
     <header className="bg-surface-container border-b border-outline/15 relative overflow-hidden">
+      {breadcrumbs.length > 1 && <StructuredData data={{
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.label,
+          ...(crumb.href ? { item: new URL(crumb.href, siteConfig.url).toString() } : {}),
+        })),
+      }} />}
       <div className="absolute inset-0 bg-[url('/logo.svg')] bg-no-repeat bg-center bg-[length:200px] opacity-[0.08] pointer-events-none z-0 md:bg-[length:260px] md:opacity-[0.07]" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 relative z-10">
         {breadcrumbs.length > 0 && (
-          <nav className="flex items-center space-x-1 text-sm text-on-surface-variant mb-2">
+          <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1 text-sm text-on-surface-variant mb-2">
             {breadcrumbs.map((crumb, index) => (
               <React.Fragment key={index}>
                 {index > 0 && (
-                  <svg className="w-4 h-4 text-outline/60 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg aria-hidden="true" className="w-4 h-4 text-outline/60 mx-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
                   </svg>
                 )}
@@ -30,7 +42,7 @@ const SlimPageHeader: React.FC<SlimPageHeaderProps> = ({ title, subtitle, breadc
                     {crumb.label}
                   </a>
                 ) : (
-                  <span className="text-foreground font-medium">{crumb.label}</span>
+                  <span aria-current={index === breadcrumbs.length - 1 ? 'page' : undefined} className="text-foreground font-medium">{crumb.label}</span>
                 )}
               </React.Fragment>
             ))}

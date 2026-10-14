@@ -1,11 +1,14 @@
 import { pageMetadata } from '@/lib/metadata'
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Eye } from 'lucide-react'
 import LogoMarquee from '@/components/LogoMarquee'
 import Section from '@/components/Section'
 import { clientGroups } from '@/lib/clients-data'
+import { siteConfig } from '@/lib/site-config'
+import { serviceHref } from '@/lib/service-pages'
 
-export const metadata = pageMetadata('/', 'Superlan East Africa Limited', 'ERP systems. Bespoke IT solutions. Managed services. Cybersecurity. Since 2011, Superlan East Africa Limited has been the technology partner businesses across East Africa trust to build, innovate, and protect, delivering professional, reliable solutions built to last.')
+export const metadata = pageMetadata('/', 'IT Solutions in Kenya | Superlan East Africa Limited', siteConfig.description)
 
 const whyChooseUsItems = [
   {
@@ -90,6 +93,8 @@ const marqueeImages = clientGroups.flatMap((group) =>
   group.clients.map((client) => ({
     src: client.logo,
     alt: client.alt,
+    width: client.width,
+    height: client.height,
   }))
 )
 
@@ -98,7 +103,9 @@ export default function HomePage() {
     <>
       {/* Hero Section */}
       <section className="relative w-full overflow-hidden bg-surface-container min-h-[520px] md:min-h-[600px] flex items-center">
-        <div className="absolute inset-0 bg-[url('/logo.svg')] bg-no-repeat bg-center bg-[length:260px] opacity-[0.12] pointer-events-none z-0 md:bg-[length:340px] md:opacity-[0.10]" />
+        <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center opacity-[0.12] pointer-events-none z-0 md:opacity-[0.10]">
+          <Image src="/logo.svg" alt="" width={322} height={437} preload fetchPriority="high" className="w-[260px] md:w-[340px] h-auto" />
+        </div>
         <div
           className="absolute w-[400px] h-[400px] bg-primary rounded-full blur-[80px] opacity-25 pointer-events-none z-0"
           style={{ top: '-100px', left: '-100px' }}
@@ -133,7 +140,7 @@ export default function HomePage() {
               href="/about"
               className="inline-flex items-center justify-center h-12 px-5 text-base md:h-14 md:px-8 md:text-lg font-medium bg-primary text-on-primary rounded-large hover:bg-primary-hover active:bg-primary-pressed transition-colors duration-200"
             >
-              Learn More
+              About Superlan
             </Link>
             <Link
               href="/services"
@@ -155,15 +162,15 @@ export default function HomePage() {
         <div className="max-w-[1280px] mx-auto px-6 md:px-8 lg:px-10 py-6 md:py-7">
           <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-base md:text-lg lg:text-xl font-bold leading-relaxed">
             <span className="inline-flex items-center gap-3 whitespace-nowrap">
-              <span>ERP Systems</span>
+              <Link href={serviceHref('erp')} className="hover:underline underline-offset-4">ERP Systems</Link>
               <span aria-hidden="true" className="text-tertiary">·</span>
-              <span>Bespoke IT Solutions</span>
+              <Link href={serviceHref('software')} className="hover:underline underline-offset-4">Bespoke IT Solutions</Link>
             </span>
             <span aria-hidden="true" className="hidden sm:inline text-tertiary">·</span>
             <span className="inline-flex items-center gap-3 whitespace-nowrap">
-              <span>Managed Services</span>
+              <Link href={serviceHref('managed')} className="hover:underline underline-offset-4">Managed Services</Link>
               <span aria-hidden="true" className="text-tertiary">·</span>
-              <span>Cybersecurity</span>
+              <Link href={serviceHref('cybersecurity')} className="hover:underline underline-offset-4">Cybersecurity</Link>
             </span>
           </p>
         </div>

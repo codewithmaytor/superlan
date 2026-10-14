@@ -7,7 +7,7 @@ import SlimPageHeader from '@/components/SlimPageHeader'
 import Section from '@/components/Section'
 
 export const dynamic = 'force-dynamic'
-export const metadata = pageMetadata('/contact', 'Contact Us - Superlan East Africa Limited', 'Discuss ERP, bespoke IT solutions, managed services and cybersecurity with Superlan East Africa Limited.')
+export const metadata = pageMetadata('/contact', 'Contact Superlan | Nairobi IT Services & ERP Support', 'Contact Superlan in Nairobi, Kenya about ERP, custom software, managed IT or cybersecurity. Call, email, WhatsApp or send your project enquiry.')
 export default function ContactPage() {
   const formAvailable = contactDeliveryReady()
   return <>

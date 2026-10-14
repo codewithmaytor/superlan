@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 interface ServiceCardProps {
@@ -9,6 +10,7 @@ interface ServiceCardProps {
   chips?: string[]
   featured?: boolean
   image?: string
+  href?: string
 }
 
 const iconMap: Record<string, React.ReactNode> = {
@@ -94,7 +96,7 @@ const iconMap: Record<string, React.ReactNode> = {
   ),
 }
 
-export default function ServiceCard({ icon, title, description, chips, featured, image }: ServiceCardProps) {
+export default function ServiceCard({ icon, title, description, chips, featured, image, href }: ServiceCardProps) {
   const iconNode = iconMap[icon] || null
 
   return (
@@ -130,7 +132,7 @@ export default function ServiceCard({ icon, title, description, chips, featured,
                 featured ? 'text-2xl text-primary' : 'text-xl text-foreground'
               )}
             >
-              {title}
+              {href ? <Link href={href} className="hover:underline underline-offset-4">{title}</Link> : title}
             </h3>
             {featured && (
               <span data-whatsapp-avoid className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-tertiary text-on-tertiary">
@@ -153,6 +155,7 @@ export default function ServiceCard({ icon, title, description, chips, featured,
               ))}
             </div>
           )}
+          {href && <Link href={href} className="inline-flex min-h-11 items-center text-primary underline mt-4">Explore {title}</Link>}
         </div>
       </div>
     </div>

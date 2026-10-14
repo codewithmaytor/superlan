@@ -6,7 +6,7 @@ import SlimPageHeader from '@/components/SlimPageHeader'
 import Section from '@/components/Section'
 import DeliveryProcess from '@/components/DeliveryProcess'
 
-export const metadata = pageMetadata('/projects', 'Projects - Superlan East Africa Limited', 'Discuss ICT project requirements and explore the sectors served by Superlan East Africa Limited.')
+export const metadata = pageMetadata('/projects', 'ICT Projects & Selected Clients | Superlan Kenya', 'Explore Superlan’s selected past clients and ICT delivery process. Prepare an ERP, software or infrastructure project brief and discuss your requirements.')
 const sectors = ['Government Institutions', 'Educational Institutions', 'Financial Organizations', 'Healthcare Facilities', 'NGOs', 'Corporate Organizations', 'Small and Medium Enterprises']
 export default function ProjectsPage() {
   return <>
